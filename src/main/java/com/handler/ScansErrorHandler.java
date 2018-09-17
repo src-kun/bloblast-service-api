@@ -1,7 +1,6 @@
 package com.handler;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,15 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bean.exception.GeneralErrorBean;
-import com.exception.GeneralErrorException;
+import com.exception.AlreadyRunningException;
 
 @ControllerAdvice
 @ResponseBody
-@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-public class GeneralErrorHandler {
+@ResponseStatus(code=HttpStatus.INTERNAL_SERVER_ERROR)
+public class ScansErrorHandler {
 
-	@ExceptionHandler(GeneralErrorException.class)
-	public GeneralErrorBean ExceptionHandler(HttpServletResponse response,HttpServletRequest request, Exception e) {
+	@ExceptionHandler(AlreadyRunningException.class)
+	public GeneralErrorBean alreadyRunningException(HttpServletRequest request, Exception e) {
 		return new GeneralErrorBean(request.getRequestURI().toString(), e.getMessage());
 	}
+
 }
